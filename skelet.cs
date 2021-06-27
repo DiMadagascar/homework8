@@ -288,7 +288,7 @@ namespace Homework_08
                         }
                     
                 }
-                InnerDeps.Add(new Department($"Отдел_{N}", date, col, gDepartmentName));
+              
 
 
 
@@ -310,28 +310,32 @@ namespace Homework_08
             int col = Convert.ToInt32(Console.ReadLine());
             for (int i = 0; i < departments.Count; i++)
             {
-                if (departments[i].Name==N)
+                if (departments[i].Name == N)
                 {
                     departments[i].Name = $"Имя_{No}";
                     departments[i].Date = date;
                     departments[i].Countofworkers = col;
                     break;
                 }
-            }
-            for (int i = 0;i< InnerDeps.Count;i++)
-            {
-                if (InnerDeps[i].Name == N)
-                {
-                    InnerDeps[i].Name = $"Отдел_{No}";
-                    InnerDeps[i].Date = date;
-                    InnerDeps[i].Countofworkers = col;
-                    
-                    break;
+                else {
+                    for (int j = 0; j < departments[i].InnerDeps.Count; j++)
+                    {
+                        if (departments[i].InnerDeps[j].Name == N)
+                        {
+                            departments[i].InnerDeps[j].Name = $"Отдел_{No}";
+                            departments[i].InnerDeps[j].Date = date;
+                            departments[i].InnerDeps[j].Countofworkers = col;
+
+                            break;
+                        }
+                    }
                 }
             }
+        }
+            
             
 
-        }
+        
         /// <summary>
         /// Удаление отдела
         /// </summary>
@@ -360,31 +364,55 @@ namespace Homework_08
         {
             var selectedWorkers = from user in workers
                                  where user.DepartmentName.Contains($"{depforsort}")
-                                 select user;
-            IEnumerable<Worker> sortworkers;
-            switch (fieldforsort)
-            {
-                case "1":
-                    sortworkers = selectedWorkers.OrderBy(worker => worker.N);
-                    break;
-                case "2":
-                    sortworkers = selectedWorkers.OrderBy(worker => worker.FirstName);
-                    break;
-                case "3":
-                    sortworkers = selectedWorkers.OrderBy(worker => worker.LastName);
-                    break;
-                case "4":
-                    sortworkers = selectedWorkers.OrderBy(worker => worker.Age);
-                    break;
-                case "5":
-                    sortworkers = selectedWorkers.OrderBy(worker => worker.Salary);
-                    break;
+                                 
+            select user;
 
-            }
             
 
 
+            switch (fieldforsort)
+            {
+                case "1":
+                    var sortusers = from user in selectedWorkers
+                                    orderby user.N
+                                    select user;
+                    foreach (Worker user in sortusers)
+                        Console.WriteLine($"\t{ user.Print()}");
+                    break;
+                case "2":
+                     sortusers = from user in selectedWorkers
+                                    orderby user.FirstName
+                                 select user;
+                    foreach (Worker user in sortusers)
+                        Console.WriteLine($"\t{ user.Print()}");
+                    break;
+                case "3":
+                    sortusers = from user in selectedWorkers
+                                orderby user.LastName
+                                select user;
+                    foreach (Worker user in sortusers)
+                        Console.WriteLine($"\t{ user.Print()}");
+                    break;
+                case "4":
+                     sortusers = from user in selectedWorkers
+                                    orderby user.Age
+                                    select user;
+                    foreach (Worker user in sortusers)
+                        Console.WriteLine($"\t{ user.Print()}");
+                    break;
+                case "5":
+                     sortusers = from user in selectedWorkers
+                                    orderby user.Salary
+                                    select user;
+                    foreach (Worker user in sortusers)
+                        Console.WriteLine($"\t{ user.Print()}");
+                    break;
+
+            }
+          
+
         }
+       
     }
        
     }

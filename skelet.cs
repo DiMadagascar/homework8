@@ -342,18 +342,28 @@ namespace Homework_08
         public static void DeleteDepartment()
         {
             Console.WriteLine("Введите номер отдела, который Вы хотите удалить");
-            string N =Console.ReadLine();
+            string N = $"Отдел_{Console.ReadLine()}";
             for (int i = 0; i < departments.Count; i++)
             {
-                if (departments[i].Name.Contains(N))
+                if (departments[i].Name == N)
                 {
                     departments.RemoveAt(i);
-                    
                     break;
                 }
-
-
+                else
+                {
+                    for (int j = 0; j < departments[i].InnerDeps.Count; j++)
+                    {
+                        if (departments[i].InnerDeps[j].Name == N)
+                        {
+                            departments[i].InnerDeps.RemoveAt(j);
+                            
+                            break;
+                        }
+                    }
+                }
             }
+            
         }
         /// <summary>
         /// Метод для сортировки сотрудников по полям
